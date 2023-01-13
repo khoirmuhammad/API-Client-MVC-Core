@@ -1,0 +1,74 @@
+﻿@model IEnumerable<VoxTestApplication.Models.Organizer.Organizer>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int page = ViewData["Page"] == null ? 1 : Convert.ToInt32(ViewData["Page"]);
+    int totalPages = ViewData["TotalPages"] == null ? 1 : Convert.ToInt32(ViewData["TotalPages"]);
+    int currentPage = ViewData["CurrentPage"] == null ? 1 : Convert.ToInt32(ViewData["CurrentPage"]);
+    int next = page + 1;
+    int previous = page - 1;
+}
+
+<h2>List of Organizers</h2>
+
+@{
+    string? success = Convert.ToString(TempData["SuccessMessage"]);
+    if (!string.IsNullOrEmpty(success))
+    {
+        <div class="alert alert-success">
+            <p>@success</p>
+        </div>
+    }
+
+}
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+@{
+    if (page > 1)
+    {
+        <a asp-action="Index" asp-route-page="@previous">Previous</a>
+    }
+
+    if (currentPage < totalPages)
+    {
+        <a asp-action="Index" asp-route-page="@next">Next</a>
+    }
+}
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrganizerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageLocation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrganizerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageLocation)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

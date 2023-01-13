@@ -1,0 +1,60 @@
+﻿@model VoxTestApplication.Models.Organizer.Organizer
+
+<style>
+    .input-validation-error {
+        border-color: red;
+    }
+</style>
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+@{
+    if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            <p>@ViewBag.ErrorMessage</p>
+        </div>
+    }
+
+    if (!string.IsNullOrEmpty(ViewBag.SuccessMessage))
+    {
+        <div class="alert alert-success">
+            <p>@ViewBag.SuccessMessage</p>
+        </div>
+    }
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="OrganizerName" class="control-label"></label>
+                <input asp-for="OrganizerName" class="form-control" />
+                <span asp-validation-for="OrganizerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageLocation" class="control-label"></label>
+                <input asp-for="ImageLocation" class="form-control" />
+                <span asp-validation-for="ImageLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
